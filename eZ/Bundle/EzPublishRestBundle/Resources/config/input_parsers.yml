@@ -65,6 +65,8 @@ parameters:
     ezpublish_rest.input.parser.internal.criterion.UserMetadata.class: eZ\Publish\Core\REST\Server\Input\Parser\Criterion\UserMetadata
     ezpublish_rest.input.parser.internal.criterion.Visibility.class: eZ\Publish\Core\REST\Server\Input\Parser\Criterion\Visibility
 
+    ezpublish_rest.input.parser.internal.limitation.Section.class: eZ\Publish\Core\REST\Server\Input\Parser\Limitation\SectionLimitation
+
     # REST client
     ezpublish_rest.input.parser.Content.class: eZ\Publish\Core\REST\Client\Input\Parser\Content
     ezpublish_rest.input.parser.ContentInfo.class: eZ\Publish\Core\REST\Client\Input\Parser\ContentInfo
@@ -563,6 +565,14 @@ services:
         class: %ezpublish_rest.input.parser.internal.criterion.Visibility.class%
         tags:
             - { name: ezpublish_rest.input.parser, mediaType: application/vnd.ez.api.internal.criterion.Visibility }
+
+    # limitation parsers
+
+    ezpublish_rest.input.parser.internal.limitation.section:
+        parent: ezpublish_rest.input.parser
+        class: %ezpublish_rest.input.parser.internal.limitation.section.class%
+        tags:
+            - { name: ezpublish_rest.input.parser, mediaType: application/vnd.ez.api.internal.limitation.Section }
 
     # Rest client
 
