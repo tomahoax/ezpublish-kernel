@@ -568,11 +568,33 @@ services:
 
     # limitation parsers
 
-    ezpublish_rest.input.parser.internal.limitation.section:
+    ezpublish_rest.input.parser.internal.limitation.ContentType:
+        parent: ezpublish_rest.input.parser
+        class: %ezpublish_rest.input.parser.internal.limitation.section.class%
+        tags:
+            - { name: ezpublish_rest.input.parser, mediaType: application/vnd.ez.api.internal.limitation.ContentType }
+        arguments:
+            - "contentTypeId"
+            - "eZ\Publish\API\Repository\Values\User\Limitation\ContentTypeLimitation"
+
+    ezpublish_rest.input.parser.internal.limitation.Language:
+        parent: ezpublish_rest.input.parser
+        class: %ezpublish_rest.input.parser.internal.limitation.language.class%
+        tags:
+            - { name: ezpublish_rest.input.parser, mediaType: application/vnd.ez.api.internal.limitation.Language }
+        arguments:
+            - "languageId"
+            - "eZ\Publish\API\Repository\Values\User\Limitation\LanguageLimitation"
+
+    ezpublish_rest.input.parser.internal.limitation.Section:
         parent: ezpublish_rest.input.parser
         class: %ezpublish_rest.input.parser.internal.limitation.section.class%
         tags:
             - { name: ezpublish_rest.input.parser, mediaType: application/vnd.ez.api.internal.limitation.Section }
+        arguments:
+            - "sectionId"
+            - "eZ\Publish\API\Repository\Values\User\Limitation\SectionLimitation"
+
 
     # Rest client
 
