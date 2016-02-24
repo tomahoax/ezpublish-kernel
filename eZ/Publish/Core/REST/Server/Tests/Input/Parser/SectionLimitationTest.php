@@ -26,8 +26,8 @@ class SectionInputTest extends BaseTest
                 'ref' => [
                     [
                         '_href' => '/content/section/2',
-                        '_media-type' => "application/vnd.ez.api.Section+json"
-                    ]
+                        '_media-type' => "application/vnd.ez.api.Section+json",
+                    ],
                 ],
             ],
         );
