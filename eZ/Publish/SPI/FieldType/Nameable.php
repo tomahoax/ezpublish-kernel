@@ -6,11 +6,10 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  *
- * @since 6.2.1/5.4.6
+ * @since 6.3/5.4.6
  */
 namespace eZ\Publish\SPI\FieldType;
 
-use eZ\Publish\SPI\Persistence\Content\Field;
 use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 
 /**
@@ -18,16 +17,36 @@ use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
  * able to generate content name when field is part of name-schema or url-schema.
  *
  * For use by business logic (API implementation), so can *not* directly or indirectly rely on API.
+ * Most FieldTypes will only need to Value in order to generate name, however others will need for instance need to use
+ * other services. Example a psudo Relation FieldType:
+ * ```php
+ * class NameField implements Nameable
+ * {
+ *     public function __construct(ContentHandler $contentHandler){...}
+ *
+ *     publish function getName(Value $value, FieldDefinition $fieldDefinition, $languageCode)
+ *     {
+ *         // This will only return main language but gives an example of use
+ *         return $this->contentHandler->loadContentInfo($value->destinationContentId)->name;
+ *     }
+ * }
+ * ```
  */
 interface Nameable
 {
     /**
-     * Get field name for use in content name/url schema.
+     * Returns a human readable string representation from the given $value.
      *
-     * @param \eZ\Publish\SPI\Persistence\Content\Field $field
+     * It will be used to generate content name and url alias if current field
+     * is designated to be used in the content name/urlAlias pattern.
+     *
+     * The used $value can be assumed to be already accepted by {@link FieldType::acceptValue()}.
+     *
+     * @param \eZ\Publish\SPI\FieldType\Value $value
      * @param \eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition $fieldDefinition
+     * @param string $languageCode
      *
      * @return string
      */
-    public function getName(Field $field, FieldDefinition $fieldDefinition);
+    public function getName(Value $value, FieldDefinition $fieldDefinition, $languageCode);
 }
